@@ -15,8 +15,8 @@ def mk_exp_dir(seed: str) -> pathlib.Path:
 
 class Recorder:
     def __init__(self, exp_dir: pathlib.Path):
-        self.csv = open(exp_dir / "chain.csv", "w", newline="")
-        self.jl = open(exp_dir / "chain.jsonl", "w")
+        self.csv = open(exp_dir / "chain.csv", "w", newline="", encoding="utf-8")
+        self.jl = open(exp_dir / "chain.jsonl", "w", encoding="utf-8")
         self.w = csv.DictWriter(self.csv, fieldnames=["cycle", "phase", "model", "text", "score"])
         self.w.writeheader()
 
