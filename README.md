@@ -55,6 +55,10 @@ LLM Telephone implements a digital version of the classic "telephone game" using
    ```bash
    export OPENROUTER_API_KEY="your-api-key-here"
    ```
+   Alternatively, add it to `.env`. The API key is read lazily when the LLM client is initialized. Commands like `python telephone.py --help` work without requiring an API key. If the key is not set when running an experiment, the program will exit with code 2 and an actionable message:
+   ```
+   OPENROUTER_API_KEY is not set; export it or add it to .env
+   ```
 
 ### Basic Usage
 

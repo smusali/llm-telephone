@@ -5,7 +5,7 @@ import httpx
 
 from openai import OpenAI, OpenAIError
 
-from llm_tel.config import OPENROUTER_API_KEY, OPENROUTER_API_BASE, OPENROUTER_HEADERS
+from llm_tel.config import get_api_key, OPENROUTER_API_BASE, OPENROUTER_HEADERS
 
 
 def _client() -> OpenAI:
@@ -20,7 +20,7 @@ def _client() -> OpenAI:
     )
     
     return OpenAI(
-        api_key=OPENROUTER_API_KEY,
+        api_key=get_api_key(),
         base_url=OPENROUTER_API_BASE,
         default_headers=OPENROUTER_HEADERS,
         http_client=http_client,
