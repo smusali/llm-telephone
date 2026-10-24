@@ -2,15 +2,21 @@ import csv
 import json
 import pathlib
 import datetime as dt
+import re
+import tempfile
 import traceback
 
 
 def mk_exp_dir(seed: str) -> pathlib.Path:
+    """Allocate a fresh experiment directory for a nonempty, sanitized seed."""
     slug = "_".join(seed.lower().split()[:3])
+    slug = re.sub(r"[^a-z0-9]+", "_", slug).strip("_")[:80]
+    if not slug:
+        raise ValueError("Seed must contain letters or digits")
     ts = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S")
-    path = pathlib.Path("experiments") / f"{slug}_{ts}"
-    path.mkdir(parents=True, exist_ok=True)
-    return path
+    root = pathlib.Path("experiments")
+    root.mkdir(parents=True, exist_ok=True)
+    return pathlib.Path(tempfile.mkdtemp(prefix=f"{slug}_{ts}_", dir=root))
 
 
 class Recorder:
